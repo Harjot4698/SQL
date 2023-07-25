@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Common SQL Errors</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Common SQL Errors</h1>
+    <input type="text" id="searchBar" placeholder="Search for an SQL error...">
+    <section id="home">
+        <h2>Introduction</h2>
+        <p>
+          Welcome to our website dedicated to helping you efficiently work with SQL errors and solve bugs in your SQL queries! We
+          understand that dealing with SQL errors can be frustrating, so our website serves as a little pocket documentation
+          specifically tailored to help you fix these errors.
+        </p>
+      
+        <p>
+          On our website, you'll find a comprehensive list of common SQL errors that users often encounter. Each error comes with
+          a code snippet that triggers the error, so you can quickly identify the issue in your own code. Instead of overwhelming
+          you with lengthy explanations, we provide concise strategies to solve each error, enabling you to resolve the issue
+          efficiently.
+        </p>
+      
+        <p>
+          Our search bar allows you to find specific SQL errors, making it easy to navigate through the database of errors and
+          find the solution you need without hassle. Whether you are a beginner or an experienced SQL developer, our website is
+          designed to be user-friendly and supportive, providing you with the tools and information you need to overcome SQL
+          obstacles swiftly.
+        </p>
+      
+        <p>
+          We're dedicated to making your SQL journey smoother, and we hope our website becomes your go-to resource for
+          understanding, managing, and conquering SQL errors. Happy querying!
+        </p>
+      </section>
+  </header>
+
+  <main>
+    
+      
+
+    
+    <section id="error1064">
+        <h2>Error 1064: SQL Syntax Error</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1064 occurs when there's a syntax mistake in the SQL query, such as missing or misplaced keywords,
+          quotation marks, or parentheses.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have a table named 'employees' with columns 'id' and 'name', and you want to select all records
+          with names starting with 'John':
+        </p>
+        <code>
+          SELECT * FROM employees WHERE name = 'John%';
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          The correct query should use the 'LIKE' keyword to specify a pattern match for the 'name' column:
+        </p>
+        <code>
+          SELECT * FROM employees WHERE name LIKE 'John%';
+        </code>
+      </section>
+      
+  
+      <!-- Add the other error sections below -->
+      <section id="error1451">
+        <h2>Error 1451: Cannot delete or update a parent row</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1451 occurs when trying to delete or update a row in a table with a foreign key constraint, and the action
+          would violate the referential integrity.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have two tables, 'orders' and 'order_details'. The 'order_details' table has a foreign key
+          'order_id' referencing the 'id' column in the 'orders' table. If you try to delete an 'orders' row that has
+          corresponding 'order_details' rows, you'll encounter this error.
+        </p>
+        <code>
+          DELETE FROM orders WHERE id = 1;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, either delete the corresponding rows in the 'order_details' table first, or update the
+          foreign key value in the 'order_details' table to reference a valid 'order_id' in the 'orders' table.
+        </p>
+      </section>
+      <section id="error1054">
+        <h2>Error 1054: Unknown Column</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1054 occurs when the specified column name in the SQL query does not exist in the referenced table.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have a table named 'employees' with columns 'id' and 'name', and you want to select the 'age' column
+          (which doesn't exist):
+        </p>
+        <code>
+          SELECT age FROM employees;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Check the column name spelling and ensure that it exists in the 'employees' table.
+        </p>
+      </section>
+  
+      <section id="error1005">
+        <h2>Error 1005: Can't create table</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1005 occurs when there is an issue creating a table due to a foreign key constraint error or a syntax
+          mistake in the SQL statement.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have two tables, 'orders' and 'order_details'. When trying to create a foreign key constraint in
+          the 'order_details' table that references the 'id' column in the 'orders' table, you encounter this error if the
+          data types or indexes of the columns don't match.
+        </p>
+        <code>
+          CREATE TABLE order_details (
+            order_id INT,
+            -- other columns...
+            FOREIGN KEY (order_id) REFERENCES orders(id)
+          );
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the data types and indexes of the columns used in the foreign key constraint match the referenced
+          columns in the other table. Also, make sure that the referenced table exists.
+        </p>
+      </section>
+  
+      <section id="error1062">
+        <h2>Error 1062: Duplicate entry</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1062 occurs when trying to insert a duplicate entry into a column with a unique constraint, such as a
+          primary key or a unique index.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have a table named 'users' with a column 'email' defined as unique, and you try to insert a new
+          user with an email that already exists in the table:
+        </p>
+        <code>
+          INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com');
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Before inserting data, check if the value you are inserting already exists in the column with the unique
+          constraint. You can use an 'IF NOT EXISTS' clause or check for duplicates before inserting.
+        </p>
+      </section>
+  
+      <section id="error1146">
+        <h2>Error 1146: Table doesn't exist</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1146 occurs when trying to access or reference a table that does not exist in the database.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you want to perform a select query on a table named 'products', but the table 'products' does not exist
+          in the database:
+        </p>
+        <code>
+          SELECT * FROM products;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Double-check the table name spelling and ensure that the table 'products' exists in the database before running
+          the query.
+        </p>
+      </section>
+      <section id="error1215">
+        <h2>Error 1215: Cannot add foreign key constraint</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1215 occurs when trying to add a foreign key constraint to a table, but there is a mismatch between the
+          data types or index in the referenced table or the referenced table itself does not exist.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have two tables, 'orders' and 'customers'. When trying to add a foreign key constraint to the
+          'orders' table that references the 'id' column in the 'customers' table, you encounter this error if the data
+          types or indexes of the columns don't match.
+        </p>
+        <code>
+          ALTER TABLE orders
+          ADD FOREIGN KEY (customer_id) REFERENCES customers(id);
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the data types and indexes of the columns used in the foreign key constraint match the referenced
+          columns in the other table. Also, make sure that the referenced table ('customers') exists in the database.
+        </p>
+      </section>
+  
+      <section id="error1265">
+        <h2>Error 1265: Data truncated</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1265 occurs when trying to insert or update data into a column, but the value being inserted is too large
+          for the column's data type, resulting in data truncation.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have a column 'description' in a table with a data type of VARCHAR(50), and you try to insert a
+          value longer than 50 characters into the column:
+        </p>
+        <code>
+          INSERT INTO products (name, description) VALUES ('Product 1', 'This is a very long description that exceeds the
+          50-character limit.');
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the data being inserted or updated fits within the column's defined data type and length. You can
+          either truncate the data before inserting or modify the column's data type to accommodate longer values.
+        </p>
+      </section>
+  
+      <section id="error2006">
+        <h2>Error 2006: MySQL server has gone away</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2006 occurs when the MySQL server drops the connection due to inactivity or timeout settings. This can
+          happen if a long-running query or operation takes too much time to complete.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          This error can occur when executing a large query that takes a long time to process or when trying to import a
+          large dataset that causes the connection to time out.
+        </p>
+        <code>
+          -- Large, time-consuming query
+          SELECT * FROM large_table WHERE ...;
+  
+          -- Importing a large dataset
+          LOAD DATA LOCAL INFILE 'data.csv' INTO TABLE my_table;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, you can try the following:
+          <ul>
+            <li>Optimize the query or operation to run more efficiently.</li>
+            <li>Increase the timeout settings on the MySQL server.</li>
+            <li>Break down large operations into smaller batches if possible.</li>
+            <li>Check your internet connection and network stability.</li>
+          </ul>
+        </p>
+      </section>
+  
+      <section id="error1452">
+        <h2>Error 1452: Cannot add or update a child row</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1452 occurs when trying to insert or update a row with a foreign key constraint, and the referenced parent
+          row does not exist in the parent table.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have two tables, 'orders' and 'customers'. The 'orders' table has a foreign key 'customer_id'
+          referencing the 'id' column in the 'customers' table. If you try to insert an 'order' with a 'customer_id' that
+          does not exist in the 'customers' table, you will encounter this error.
+        </p>
+        <code>
+          INSERT INTO orders (order_id, customer_id, total_amount)
+          VALUES (1, 1001, 50.00);
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the 'customer_id' value being inserted or updated in the 'orders' table corresponds to a valid
+          'id' in the 'customers' table. Check for data integrity and validate foreign key values before performing
+          insert or update operations.
+        </p>
+      </section>
+      <section id="error1065">
+        <h2>Error 1065: Query was empty</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1065 occurs when an SQL query is executed with no actual content. This happens when the query is empty or
+          contains only whitespace characters.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          An empty query that triggers this error:
+        </p>
+        <code>
+          ;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that your SQL query has valid content and is not empty. Double-check the query statement for any
+          inadvertent semicolons or whitespace characters.
+        </p>
+      </section>
+  
+      <section id="error1264">
+        <h2>Error 1264: Out of range value for column</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1264 occurs when you attempt to insert a value that is outside the acceptable range for a specific column's
+          data type.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have a column 'age' defined as INT, which only allows values from -2147483648 to 2147483647. If you
+          try to insert a value outside this range, you will encounter this error.
+        </p>
+        <code>
+          INSERT INTO users (name, age) VALUES ('John Doe', 5000000000);
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the value being inserted or updated falls within the acceptable range for the column's data type.
+          Check the data type and the range it supports to avoid this error.
+        </p>
+      </section>
+  
+      <section id="error1364">
+        <h2>Error 1364: Field doesn't have a default value</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1364 occurs when trying to insert a new row into a table with a column that has no default value defined,
+          and you do not provide a value for that column in the INSERT statement.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have a table 'employees' with a column 'date_of_joining' that has no default value defined. If you
+          try to insert a new employee without specifying the 'date_of_joining', you will encounter this error.
+        </p>
+        <code>
+          INSERT INTO employees (name, department) VALUES ('Jane Smith', 'Sales');
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Provide a value for the column that has no default value during the INSERT operation, or set a default value for
+          the column in the table's schema to avoid this error.
+        </p>
+      </section>
+  
+      <section id="error2013">
+        <h2>Error 2013: Lost connection to MySQL server</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2013 occurs when the client loses the connection to the MySQL server during a long-running query or due to
+          network issues.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          This error can occur when executing a query that takes a long time to complete, and the client's connection times
+          out or disconnects due to network interruptions.
+        </p>
+        <code>
+          SELECT * FROM large_table WHERE ...;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, you can try the following:
+          <ul>
+            <li>Optimize the query to run more efficiently.</li>
+            <li>Increase the connection timeout settings in the MySQL server configuration.</li>
+            <li>Check your internet connection and network stability.</li>
+          </ul>
+        </p>
+      </section>
+  
+      <section id="error1048">
+        <h2>Error 1048: Column cannot be null</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1048 occurs when trying to insert or update a row, and the specified column is defined as NOT NULL, but no
+          value is provided for that column.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have a table 'students' with a column 'student_id' defined as NOT NULL. If you try to insert a new
+          student without providing a 'student_id', you will encounter this error.
+        </p>
+        <code>
+          INSERT INTO students (name, age) VALUES ('Alice', 20);
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Provide a value for the column that is defined as NOT NULL during the INSERT operation to avoid this error. If
+          the column should have a default value, consider setting a default value for the column in the table's schema.
+        </p>
+      </section>
+      <section id="error1216">
+        <h2>Error 1216: Cannot add or update a child row</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1216 occurs when trying to add or update a row with a foreign key constraint, but the referenced parent row
+          in the parent table does not exist.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you have two tables, 'orders' and 'customers'. The 'orders' table has a foreign key 'customer_id'
+          referencing the 'id' column in the 'customers' table. If you try to insert an 'order' with a 'customer_id' that
+          does not exist in the 'customers' table, or if you try to update an 'order' to reference a 'customer_id' that
+          does not exist, you will encounter this error.
+        </p>
+        <code>
+          INSERT INTO orders (order_id, customer_id, total_amount)
+          VALUES (1, 1001, 50.00);
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the 'customer_id' value being inserted or updated in the 'orders' table corresponds to a valid
+          'id' in the 'customers' table. Check for data integrity and validate foreign key values before performing
+          insert or update operations.
+        </p>
+      </section>
+  
+      <section id="error1450">
+        <h2>Error 1450: ALTER TABLE is not allowed</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1450 occurs when trying to perform an ALTER TABLE operation, such as adding or modifying a column, but the
+          table is locked or in use by another process.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Trying to modify the 'products' table while another transaction is using it can lead to this error.
+        </p>
+        <code>
+          ALTER TABLE products ADD COLUMN new_column INT;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that no other processes or transactions are using the table when performing an ALTER TABLE operation. Wait
+          for the table to become available or schedule the modification during a time when it won't impact other processes.
+        </p>
+      </section>
+  
+      <section id="error1305">
+        <h2>Error 1305: FUNCTION does not exist</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1305 occurs when trying to call a non-existent or undefined function in an SQL query.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you try to use the function 'MY_CUSTOM_FUNCTION' in a query, but the function is not defined in the
+          database:
+        </p>
+        <code>
+          SELECT id, name, MY_CUSTOM_FUNCTION(price) AS discounted_price FROM products;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the function 'MY_CUSTOM_FUNCTION' is defined in the database before using it in your queries.
+        </p>
+      </section>
+  
+      <section id="error2014">
+        <h2>Error 2014: Commands out of sync</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2014 occurs when trying to execute another query before processing the results of the previous query.
+          This usually happens when using client libraries or programming interfaces that do not handle multiple
+          queries correctly.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          When using a programming interface to execute multiple queries without fetching the results or using stored
+          procedures, you may encounter this error.
+        </p>
+        <code>
+          SELECT * FROM products; // Query 1
+          INSERT INTO orders (customer_id, total_amount) VALUES (1001, 50.00); // Query 2
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          To avoid this error, make sure to fetch and process the results of one query before executing another. If using
+          client libraries or programming interfaces, ensure that they handle multiple queries appropriately.
+        </p>
+      </section>
+  
+      <section id="error1149">
+        <h2>Error 1149: You have an error in your SQL syntax</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1149 occurs when there is a syntax error in your SQL query, such as missing or misplaced keywords,
+          quotation marks, or parentheses.
+        </p>
+        <p>
+          <strong>Example:</strong>
+          Let's say you try to execute the following query with a syntax error:
+        </p>
+        <code>
+          SELECT id, name, price FROM products WHERE category = 'Electronics'
+          ORDER BY price DESC;
+        </code>
+        <p>
+          <strong>Solution:</strong>
+          Review your SQL query and identify the syntax error. Check for missing or misplaced keywords, and ensure that
+          quotation marks and parentheses are balanced properly.
+        </p>
+      </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
