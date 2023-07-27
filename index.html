@@ -509,6 +509,487 @@
           quotation marks and parentheses are balanced properly.
         </p>
       </section>
+      <section id="error1205">
+        <h2>Error 1205: Deadlock</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1205 occurs when two or more transactions are waiting for each other to release locked resources, resulting in
+          a deadlock situation where none of the transactions can proceed.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- Transaction A
+  BEGIN;
+  UPDATE table_name SET column_name = value WHERE condition;
+  -- Wait for Transaction B
+  
+  -- Transaction B
+  BEGIN;
+  UPDATE table_name SET column_name = value WHERE condition;
+  -- Wait for Transaction A
+  COMMIT; -- This will cause a deadlock
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, you can implement retry mechanisms, optimize transaction isolation levels, or redesign your
+          database schema to reduce the likelihood of deadlocks.
+        </p>
+      </section>
+  
+      <section id="error1067">
+        <h2>Error 1067: Invalid default value</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1067 occurs when trying to set an invalid default value for a column in your SQL table, such as an incorrect
+          data type or an out-of-range value.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column_name datatype DEFAULT 'invalid_default_value'
+  );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the default value you set for a column is of the correct data type and within the valid range for that
+          data type.
+        </p>
+      </section>
+  
+      <!-- Add the other error sections below -->
+  
+      <section id="error1093">
+        <h2>Error 1093: You can't specify target table for update in FROM clause</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1093 occurs when trying to update a table based on a subquery that references the same table in its FROM
+          clause. This limitation prevents potential conflicts in updating the same table during the subquery evaluation.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  UPDATE table_name
+  SET column_name = value
+  WHERE table_name.column_name IN (SELECT column_name FROM table_name WHERE condition);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To work around this error, you can use a temporary table or table alias for the subquery to avoid directly
+          referencing the target table in the FROM clause.
+        </p>
+      </section>
+  
+      <section id="error1690">
+        <h2>Error 1690: BIGINT UNSIGNED value is out of range</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1690 occurs when trying to insert a value that is outside the acceptable range for a BIGINT UNSIGNED column.
+          BIGINT UNSIGNED columns only support positive values, so negative values or values larger than the maximum
+          permissible range will trigger this error.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column_name BIGINT UNSIGNED
+  );
+  
+  INSERT INTO table_name (column_name) VALUES (-1); -- This will cause the error
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the value you're inserting into a BIGINT UNSIGNED column is within the range of 0 to 18446744073709551615.
+        </p>
+      </section>
+  
+      <section id="error1049">
+        <h2>Error 1049: Unknown database</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1049 occurs when trying to access a database that does not exist on the server.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  USE non_existent_database; -- This will cause the error
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Verify the database name and ensure it exists on the server. If not, create the database or double-check the spelling.
+        </p>
+      </section>
+  
+      <section id="error2019">
+        <h2>Error 2019: Can't initialize character set</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2019 occurs when the MySQL server cannot initialize a specific character set that you've configured for your
+          connection.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  SET NAMES 'invalid_character_set'; -- This will cause the error
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Check your MySQL server configuration and ensure that the character set you're trying to use is supported and properly
+          installed. You may need to install additional character sets if required.
+        </p>
+      </section>
+  
+      <section id="error1241">
+        <h2>Error 1241: Operand should contain 1 column</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1241 occurs when a subquery returns more than one column, but the surrounding SQL expects only one column as an
+          operand.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  SELECT column_name FROM table_name WHERE (column_name1, column_name2) = (SELECT value1, value2 FROM another_table);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that your subquery returns only one column if it's used as a single operand in the main query.
+        </p>
+      </section>
+  
+      <section id="error1069">
+        <h2>Error 1069: Too many keys specified</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1069 occurs when trying to create an index or a key, and the combination of columns specified results in too
+          many keys being defined for the table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column1 datatype,
+      column2 datatype,
+      -- Add more columns here
+      INDEX (column1, column2, column3) -- This will cause the error
+  );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Reevaluate your index or key definition, and consider reducing the number of columns in the index to avoid exceeding
+          the maximum number of allowed keys.
+        </p>
+      </section>
+  
+      <section id="error1261">
+        <h2>Error 1261: Row 1 doesn't contain data for all columns</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1261 occurs when trying to insert data into a table, but the provided data does not cover all the columns in the
+          table's schema.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column1 datatype,
+      column2 datatype
+  );
+  
+  INSERT INTO table_name (column1) VALUES (value1); -- This will cause the error
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that your INSERT statement includes data for all the columns in the table or provide default values for columns
+          that allow them.
+        </p>
+      </section>
+  
+      <section id="error1292">
+        <h2>Error 1292: Incorrect date value</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1292 occurs when trying to insert or update a date column with an invalid or incorrectly formatted date value.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      date_column DATE
+  );
+  
+  INSERT INTO table_name (date_column) VALUES ('2023-07-32'); -- This will cause the error
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the date values you're inserting or updating are in the correct format and represent valid dates. Check for
+          typos or use proper date functions to generate valid dates.
+        </p>
+      </section>
+      <section id="error1046">
+        <h2>Error 1046: No database selected</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1046 occurs when trying to execute an SQL query without selecting a specific database to operate on.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  USE database_name;
+  SELECT * FROM table_name; -- This will cause the error if 'database_name' is not selected
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Make sure to use the 'USE' statement to select the appropriate database before executing any queries on its tables.
+        </p>
+      </section>
+  
+      <section id="error1050">
+        <h2>Error 1050: Table already exists</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1050 occurs when trying to create a table with a name that already exists in the database.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column1 datatype,
+      column2 datatype
+  );
+  -- This will cause the error if 'table_name' already exists
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Choose a different name for the new table or delete the existing table with the same name before creating a new one.
+        </p>
+      </section>
+  
+      <section id="error1068">
+        <h2>Error 1068: Multiple primary keys defined</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1068 occurs when trying to define multiple primary keys for a table, which is not allowed. A table can have only
+          one primary key.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column1 datatype PRIMARY KEY,
+      column2 datatype PRIMARY KEY -- This will cause the error
+  );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Designate only one column as the primary key for the table or create a composite primary key using multiple columns.
+        </p>
+      </section>
+  
+      <section id="error1072">
+        <h2>Error 1072: Key column 'column_name' doesn't exist in table</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1072 occurs when trying to define a foreign key constraint that references a column that does not exist in the
+          target table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table1 (
+      column1 datatype,
+      CONSTRAINT fk_name FOREIGN KEY (non_existent_column) REFERENCES table2 (column_name) -- This will cause the error
+  );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the column referenced in the foreign key constraint exists in the target table ('table2' in this example).
+        </p>
+      </section>
+  
+      <section id="error1089">
+        <h2>Error 1089: Incorrect prefix key; the used key part isn't a string, the used length is longer than the key part, or the storage engine doesn't support unique prefix keys</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1089 occurs when trying to create an index with an incorrect prefix key length, where the defined length is
+          greater than the length of the indexed column or the storage engine does not support unique prefix keys.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column1 VARCHAR(50),
+      INDEX idx_name (column1(100)) -- This will cause the error
+  );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the prefix length specified in the index definition does not exceed the length of the indexed column, and
+          check if your storage engine supports unique prefix keys if applicable.
+        </p>
+      </section>
+  
+      <section id="error1300">
+        <h2>Error 1300: Invalid utf8 character string</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1300 occurs when trying to insert or update data that includes invalid UTF-8 characters into a table with UTF-8
+          character set encoding.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column1 VARCHAR(50) CHARACTER SET utf8
+  );
+  
+  INSERT INTO table_name (column1) VALUES ('Invalid UTF-8 string'); -- This will cause the error
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the data you're inserting or updating is valid UTF-8 encoded text to avoid this error. If necessary,
+          consider using a different character set that supports the required characters.
+        </p>
+      </section>
+  
+      <section id="error1406">
+        <h2>Error 1406: Data too long for column</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1406 occurs when trying to insert or update data that exceeds the maximum length allowed for a specific column in
+          a table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column1 VARCHAR(10)
+  );
+  
+  INSERT INTO table_name (column1) VALUES ('Too long text'); -- This will cause the error
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the data you're inserting or updating does not exceed the defined length of the column. You may need to
+          truncate or modify the data to fit within the specified length.
+        </p>
+      </section>
+  
+      <section id="error1418">
+        <h2>Error 1418: Cannot delete or update a parent row: a foreign key constraint fails</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1418 occurs when trying to delete or update a row in a parent table that has dependent rows in a child table,
+          and the action would violate foreign key constraints.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE parent_table (
+      id INT PRIMARY KEY
+  );
+  
+  CREATE TABLE child_table (
+      id INT PRIMARY KEY,
+      parent_id INT,
+      CONSTRAINT fk_name FOREIGN KEY (parent_id) REFERENCES parent_table (id)
+  );
+  
+  -- This will cause the error
+  DELETE FROM parent_table WHERE id = 1;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Before deleting or updating a row in the parent table, ensure that there are no dependent rows in the child table. You
+          may need to delete or update the child rows first, or use the appropriate ON DELETE and ON UPDATE actions in the foreign
+          key constraint to handle cascading deletes or updates.
+        </p>
+      </section>
+  
+      <section id="error1452">
+        <h2>Error 1452: Cannot add or update a child row: a foreign key constraint fails</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1452 occurs when trying to insert or update a row in a child table, and the action would violate foreign key
+          constraints with the referenced parent table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE parent_table (
+      id INT PRIMARY KEY
+  );
+  
+  CREATE TABLE child_table (
+      id INT PRIMARY KEY,
+      parent_id INT,
+      CONSTRAINT fk_name FOREIGN KEY (parent_id) REFERENCES parent_table (id)
+  );
+  
+  -- This will cause the error
+  INSERT INTO child_table (id, parent_id) VALUES (1, 100);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Before inserting or updating a row in the child table, ensure that the referenced parent key value exists in the parent
+          table. If the parent key value does not exist, insert it first or use appropriate error handling to avoid violating the
+          foreign key constraint.
+        </p>
+      </section>
+  
+      <section id="error1453">
+        <h2>Error 1453: Cannot delete a parent row</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1453 occurs when trying to delete a row in a parent table, but there are dependent rows in a child table, and the
+          action would violate foreign key constraints.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE parent_table (
+      id INT PRIMARY KEY
+  );
+  
+  CREATE TABLE child_table (
+      id INT PRIMARY KEY,
+      parent_id INT,
+      CONSTRAINT fk_name FOREIGN KEY (parent_id) REFERENCES parent_table (id)
+  );
+  
+  INSERT INTO parent_table (id) VALUES (1);
+  INSERT INTO child_table (id, parent_id) VALUES (100, 1);
+  
+  -- This will cause the error
+  DELETE FROM parent_table WHERE id = 1;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Before deleting the parent row, ensure that there are no dependent rows in the child table. You may need to delete the
+          child rows first or use appropriate error handling to avoid violating the foreign key constraint.
+        </p>
+      </section>
   </main>
 
   <script src="script.js"></script>
