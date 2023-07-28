@@ -990,6 +990,463 @@
           child rows first or use appropriate error handling to avoid violating the foreign key constraint.
         </p>
       </section>
+      <section id="error1502">
+        <h2>Error 1502: Cannot create, drop, or alter a user-defined data type</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1502 occurs when trying to create, drop, or alter a user-defined data type. Certain operations cannot be performed
+          on custom data types.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- Creating a custom data type
+  CREATE TYPE custom_type AS ENUM ('value1', 'value2', 'value3');
+  
+  -- This will cause the error
+  ALTER TYPE custom_type ADD VALUE 'value4';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          User-defined data types cannot be altered in certain ways. To modify the custom data type, you may need to drop and
+          recreate it with the desired changes.
+        </p>
+      </section>
+  
+      <section id="error1553">
+        <h2>Error 1553: Cannot drop index 'index_name': needed in a foreign key constraint</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1553 occurs when trying to drop an index that is needed by a foreign key constraint. The index is essential for
+          maintaining referential integrity.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table1 (
+      id INT PRIMARY KEY
+  );
+  
+  CREATE TABLE table2 (
+      id INT PRIMARY KEY,
+      table1_id INT,
+      FOREIGN KEY (table1_id) REFERENCES table1 (id)
+  );
+  
+  -- This will cause the error
+  DROP INDEX index_name ON table1;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Before dropping the index, you must first drop the foreign key constraint that references it. Once the constraint is
+          removed, you can then drop the index.
+        </p>
+      </section>
+  
+      <section id="error1709">
+        <h2>Error 1709: Index column size too large</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1709 occurs when trying to create an index on a column that exceeds the maximum size allowed for the index.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      column1 VARCHAR(500),
+      column2 VARCHAR(500)
+  );
+  
+  -- This will cause the error
+  CREATE INDEX idx_name ON table_name (column1, column2);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the total size of the indexed columns does not exceed the maximum allowed index size. If necessary, reduce
+          the size of the indexed columns or consider creating an index on a subset of the columns.
+        </p>
+      </section>
+  
+      <section id="error1819">
+        <h2>Error 1819: Your password does not satisfy the current policy requirements</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1819 occurs when trying to set or update a user password that does not meet the password policy requirements set
+          by the server.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This will cause the error if the password is weak
+  CREATE USER 'username'@'localhost' IDENTIFIED BY 'weak_password';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Set a password that satisfies the password policy requirements, such as minimum length, use of uppercase letters,
+          lowercase letters, numbers, and special characters, as defined by the server configuration.
+        </p>
+      </section>
+  
+      <section id="error1822">
+        <h2>Error 1822: Failed to add the foreign key constraint</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1822 occurs when trying to add a foreign key constraint that references a column with a different data type or
+          length.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table1 (
+      id INT PRIMARY KEY
+  );
+  
+  CREATE TABLE table2 (
+      id INT PRIMARY KEY,
+      table1_id VARCHAR(50),
+      FOREIGN KEY (table1_id) REFERENCES table1 (id) -- This will cause the error
+  );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the data type and length of the columns in the foreign key and the referenced key match exactly. If needed,
+          modify the data type or length to match the referenced column.
+        </p>
+      </section>
+  
+      <section id="error2013">
+        <h2>Error 2013: Lost connection to MySQL server during query</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2013 occurs when the connection to the MySQL server is lost while executing a query. This can happen due to various
+          reasons, such as server timeout or network issues.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This error may occur during the execution of any query
+  SELECT * FROM large_table; -- If the connection is lost during the execution
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Check your network connection and ensure that the MySQL server is running and accessible. If the issue persists, consider
+          adjusting server timeout settings or optimizing long-running queries.
+        </p>
+      </section>
+  
+      <section id="error2015">
+        <h2>Error 2015: Cannot modify header information - headers already sent</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2015 occurs in PHP when there is an attempt to modify header information after content has already been sent to the
+          browser.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  // This will cause the error if any content is output before the header modification
+  echo 'Some content';
+  header('Location: new_page.php');
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this issue, ensure that no content is sent to the browser before modifying headers. Place any header-related
+          functions (e.g., <code>header()</code>) before any content output (e.g., <code>echo</code> or HTML tags).
+        </p>
+      </section>
+  
+      <section id="error2027">
+        <h2>Error 2027: Malformed packet</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2027 occurs when the MySQL client receives a packet from the server that is not properly formatted or is
+          inconsistent with the expected protocol.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This error can occur due to various reasons, such as network issues or server problems
+  SELECT * FROM large_table;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          If this error is sporadic, it may be due to temporary network issues. Ensure that your network connection is stable and
+          try executing the query again. If the issue persists, it may indicate a problem with the MySQL server or client
+          configuration, and you should investigate further.
+        </p>
+      </section>
+  
+      <section id="error2059">
+        <h2>Error 2059: Malformed communication packet</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2059 occurs when the MySQL client receives a communication packet from the server that is not properly formatted or
+          is corrupted.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This error can occur due to various reasons, such as network issues or server problems
+  SELECT * FROM large_table;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          If this error is sporadic, it may be due to temporary network issues. Ensure that your network connection is stable and
+          try executing the query again. If the issue persists, it may indicate a problem with the MySQL server or client
+          configuration, and you should investigate further.
+        </p>
+      </section>
+  
+      <section id="error1366">
+        <h2>Error 1366: Incorrect string value</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1366 occurs when trying to insert or update data into a column that does not accept the provided character set or
+          contains invalid characters.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      id INT PRIMARY KEY,
+      name VARCHAR(10) CHARACTER SET utf8
+  );
+  
+  -- This will cause the error
+  INSERT INTO table_name (id, name) VALUES (1, 'Hello 𝐖𝐨𝐫𝐥𝐝');
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the data being inserted or updated matches the character set and collation settings for the column. If
+          needed, adjust the character set or collation to accommodate the data being processed.
+        </p>
+      </section>
+      <section id="error2055">
+        <h2>Error 2055: Lost connection to MySQL server at 'host:port', system error: error_message</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2055 occurs when the MySQL client loses connection to the MySQL server. This can happen due to various reasons,
+          such as network issues, server overload, or server restart.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This error can occur during any query execution
+  SELECT * FROM large_table;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Check your network connection and ensure that the MySQL server is running and accessible. If the issue persists, consider
+          optimizing your queries, increasing server capacity, or investigating potential network problems.
+        </p>
+      </section>
+  
+      <section id="error2060">
+        <h2>Error 2060: Security violation</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2060 occurs when there is a security violation while performing an operation, such as access to restricted data or
+          insufficient privileges.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This error can occur due to various reasons, such as unauthorized access
+  SELECT * FROM secure_table;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the user executing the query has the appropriate privileges to access the requested data or perform the
+          operation. If necessary, review your security settings and adjust user permissions accordingly.
+        </p>
+      </section>
+  
+      <section id="error2062">
+        <h2>Error 2062: Read-only user</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2062 occurs when a user with read-only permissions attempts to perform a write operation, such as INSERT, UPDATE, or
+          DELETE.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This will cause the error if the user has read-only permissions
+  INSERT INTO table_name (column1, column2) VALUES (value1, value2);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Grant the necessary write permissions to the user to perform INSERT, UPDATE, or DELETE operations. Review the user's
+          privileges and modify them accordingly using the GRANT statement.
+        </p>
+      </section>
+  
+      <section id="error3003">
+        <h2>Error 3003: The table is read only</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 3003 occurs when attempting to modify a table that is marked as read-only. This can happen when the table is part of
+          a view or when the file permissions restrict write access.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This will cause the error if the table is read-only
+  UPDATE readonly_table SET column1 = value1 WHERE id = 1;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Check the table's properties and verify if it is part of a view or if file permissions are preventing write access. If
+          needed, adjust the table settings or file permissions to allow write operations.
+        </p>
+      </section>
+  
+      <section id="error3123">
+        <h2>Error 3123: The data for column 'column_name' is truncated to fit the column's data type</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 3123 occurs when data being inserted or updated into a column exceeds its maximum length and gets truncated to fit
+          the column's data type.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  CREATE TABLE table_name (
+      id INT PRIMARY KEY,
+      name VARCHAR(10)
+  );
+  
+  -- This will cause the error
+  INSERT INTO table_name (id, name) VALUES (1, 'This is a long name exceeding 10 characters');
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the data being inserted or updated does not exceed the column's maximum length. Adjust the data length or the
+          column's data type to accommodate the data being processed.
+        </p>
+      </section>
+  
+      <section id="error3136">
+        <h2>Error 3136: This operation is not allowed for a resultless query</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 3136 occurs when trying to perform certain operations (e.g., COMMIT) on a resultless query that does not return any
+          data.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This will cause the error if used after a resultless query
+  START TRANSACTION;
+  DELETE FROM table_name WHERE status = 'inactive';
+  COMMIT;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the query being executed is expected to return results before performing operations like COMMIT. If the
+          query is resultless, remove the inappropriate operations or modify the query accordingly.
+        </p>
+      </section>
+  
+      <section id="error3709">
+        <h2>Error 3709: You can't specify target table 'table_name' for update in FROM clause</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 3709 occurs when trying to perform an UPDATE query that references the target table in the FROM clause. MySQL
+          restricts such self-referential updates.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This will cause the error
+  UPDATE table_name SET status = 'active' WHERE id IN (SELECT id FROM table_name WHERE condition);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To perform the desired update, you can use a subquery to retrieve the IDs to be updated, and then use that subquery in the
+          UPDATE statement without referencing the target table in the FROM clause.
+        </p>
+      </section>
+  
+      <section id="error3704">
+        <h2>Error 3704: Insecure content_type in a frame</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 3704 occurs when a web page served over HTTPS tries to load content (e.g., images, scripts) over HTTP. Mixed content
+          (HTTP and HTTPS) is considered insecure, and modern browsers may block it by default.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  <!-- This can cause the error if the page is served over HTTPS -->
+  <img src="http://example.com/image.jpg" alt="Image">
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that all content on a page served over HTTPS is also served over HTTPS. Update the URLs of the resources to use
+          secure protocols (HTTPS) to avoid the mixed content issue.
+        </p>
+      </section>
+  
+      <section id="error4060">
+        <h2>Error 4060: Cannot open database "database_name" requested by the login. The login failed.</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4060 occurs when a user attempts to connect to a database using incorrect credentials or when the specified
+          database does not exist.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This can cause the error if the database name or credentials are incorrect
+  mysql -u incorrect_user -p wrong_password -D database_name;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Double-check the database name and the user credentials being used to connect. Ensure that the user has appropriate
+          permissions to access the specified database.
+        </p>
+      </section>
+  
+      <section id="error4064">
+        <h2>Error 4064: Cannot open user default database. Login failed.</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4064 occurs when a user attempts to log in to a Microsoft SQL Server database with a default database that does not
+          exist or is inaccessible.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+  -- This can cause the error if the default database is invalid
+  USE invalid_database;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Verify that the default database for the user exists and is accessible. If necessary, change the default database for the
+          user or ensure that the specified default database is available.
+        </p>
+      </section>
   </main>
 
   <script src="script.js"></script>
