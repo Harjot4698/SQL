@@ -1447,6 +1447,1027 @@
           user or ensure that the specified default database is available.
         </p>
       </section>
+      <section id="error4135">
+        <h2>Error 4135: Row count of 'table_name' inconsistent with FROM clause</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4135 occurs when trying to perform an INSERT INTO SELECT operation, and the number of columns in the SELECT
+          statement does not match the number of columns in the destination table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            INSERT INTO destination_table (column1, column2)
+            SELECT column1, column2, column3 FROM source_table;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the number of columns in the SELECT statement matches the number of columns in the destination table.
+          Add or remove columns in either the SELECT statement or the destination table as needed.
+        </p>
+      </section>
+  
+      <section id="error4175">
+        <h2>Error 4175: The program can't start because 'dll_file_name' is missing from your computer. Try reinstalling the program to fix this problem.</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4175 is not a MySQL-specific error; it is a Windows error related to missing dynamic link library (DLL) files
+          required to run a program.
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          This error can occur in scenarios unrelated to MySQL. To fix it, try reinstalling the affected program or software,
+          which may resolve the missing DLL file issue.
+        </p>
+      </section>
+  
+      <section id="error42000">
+        <h2>Error 42000: Syntax error or access violation</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 42000 is a general SQL syntax error or access violation error. It can be caused by various issues, including
+          incorrect SQL syntax, insufficient privileges, or incorrect table/column names.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SELECT * FROM non_existing_table WHERE column1 = 'value';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Review the SQL query for any syntax errors, ensure that the table/column names are correct, and check if the user has
+          the necessary privileges to perform the operation.
+        </p>
+      </section>
+  
+      <section id="error4211">
+        <h2>Error 4211: Cannot proceed with operation; the ALTER command denied to user 'user_name'@'host_name' for table 'table_name'</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4211 occurs when a user attempts to execute an ALTER TABLE command on a table but doesn't have the necessary
+          permissions to perform the operation.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            ALTER TABLE your_table ADD COLUMN new_column INT;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Grant the ALTER privilege to the user for the specified table using the GRANT statement in MySQL.
+          For example:
+          <pre><code>
+            GRANT ALTER ON your_database.your_table TO 'user_name'@'host_name';
+          </code></pre>
+        </p>
+      </section>
+  
+      <section id="error4212">
+        <h2>Error 4212: ER_BAD_NULL_ERROR: Column 'column_name' cannot be null</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4212 occurs when trying to insert or update data into a column that is defined as NOT NULL without providing a
+          value for that column.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            INSERT INTO your_table (column1) VALUES (value1);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Provide a value for the NOT NULL column in the INSERT statement. Alternatively, if the column allows NULL values, you
+          can update the table schema to allow NULL values for that column.
+        </p>
+      </section>
+  
+      <section id="error4214">
+        <h2>Error 4214: ER_SP_BADSELECT: Incorrect usage of sp_executesql with 'execute stmt using @param_list' statement</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4214 occurs when using the sp_executesql stored procedure with incorrect syntax for executing dynamic SQL
+          statements with parameter lists.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SET @sql = 'SELECT column1 FROM your_table WHERE column2 = ?';
+            EXEC sp_executesql @sql;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          When using sp_executesql, you must provide the parameter values in the correct format and order. Use the correct
+          syntax to pass parameters and their values in the statement. For example:
+          <pre><code>
+            SET @sql = 'SELECT column1 FROM your_table WHERE column2 = ?';
+            EXEC sp_executesql @sql, N'@param1 INT', @param1 = 123;
+          </code></pre>
+        </p>
+      </section>
+  
+      <section id="error5006">
+        <h2>Error 5006: ER_CANT_CREATE_FEDERATED_TABLE: Cannot create federated table. The data source connection string 'connection_string' is not in the correct format</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 5006 occurs when trying to create a federated table, but the connection string provided for the federated
+          server is not in the correct format.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE TABLE your_federated_table (
+              -- Table definition
+            ) ENGINE=FEDERATED CONNECTION='connection_string';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the connection string provided in the FEDERATED table definition is correctly formatted and contains all
+          the necessary information to connect to the remote server.
+        </p>
+      </section>
+  
+      <section id="error7015">
+        <h2>Error 7015: Can't create table 'your_table_name' (errno: 150)</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 7015, with errno 150, typically occurs when trying to create a table with a foreign key constraint that references
+          a non-existent column in the parent table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE TABLE your_table (
+              column1 INT,
+              column2 INT,
+              CONSTRAINT fk_column FOREIGN KEY (column3) REFERENCES other_table (non_existing_column)
+            );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Check that the column being referenced in the foreign key constraint exists in the parent table. Also, ensure that the
+          data types of the referencing and referenced columns match.
+        </p>
+      </section>
+  
+      <section id="error1028">
+        <h2>Error 1028: Sort aborted</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1028 occurs when there is an issue during the sorting process, and MySQL cannot complete the sort operation.
+          This can happen due to insufficient memory or disk space or other resource-related problems.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SELECT * FROM your_table ORDER BY column1;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that there is enough memory and disk space available for MySQL to perform the sorting operation. You can also
+          optimize the query or add appropriate indexes to improve sorting performance.
+        </p>
+      </section>
+  
+      <section id="error1032">
+        <h2>Error 1032: Can't find record in 'your_table'</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1032 occurs when trying to perform an UPDATE or DELETE operation, but the specified record does not exist in the
+          table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            DELETE FROM your_table WHERE column1 = 'non_existing_value';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Before performing an UPDATE or DELETE operation, verify that the record you are trying to update or delete actually
+          exists in the table. Check the condition and the data you are using in the WHERE clause.
+        </p>
+      </section>
+  
+      <section id="error1092">
+        <h2>Error 1092: You can't write-lock a log table. Only read access is possible.</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1092 occurs when trying to lock a log table for writing, which is not allowed. Log tables in MySQL are typically
+          used for read-only access to log data.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            LOCK TABLES log_table WRITE;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Log tables should not be locked for writing, as they are meant for read-only access. Remove the WRITE lock from the
+          log table to enable read access.
+        </p>
+      </section>
+  
+      <section id="error1175">
+        <h2>Error 1175: You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1175 occurs when using safe update mode in MySQL and trying to execute an UPDATE statement without a WHERE clause
+          that uses a KEY column to identify the rows to be updated.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            UPDATE your_table SET column1 = 'new_value';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Either disable safe update mode in your MySQL client or include a WHERE clause that uses a KEY column to identify the
+          rows to be updated safely. For example, you can use the primary key in the WHERE clause:
+          <pre><code>
+            UPDATE your_table SET column1 = 'new_value' WHERE primary_key_column = 'value';
+          </code></pre>
+        </p>
+      </section>
+  
+      <section id="error1203">
+        <h2>Error 1203: User already has more than 'max_user_connections' active connections</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1203 occurs when a user attempts to establish a new connection to the MySQL server, but the number of active
+          connections for that user exceeds the 'max_user_connections' limit.
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Increase the 'max_user_connections' limit for the user, or close some existing connections to free up available
+          connections. Alternatively, you can optimize the application to reuse connections efficiently.
+        </p>
+      </section>
+      <section id="error1206">
+        <h2>Error 1206: The total number of locks exceeds the lock table size</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1206 occurs when the number of locks acquired by queries in MySQL exceeds the value of the 'innodb_buffer_pool_size'
+          system variable, which represents the maximum number of locks allowed.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to the overall load on the database, not specific code snippets.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Increase the value of the 'innodb_buffer_pool_size' system variable to allow more locks. Alternatively, optimize your
+          queries and application to reduce the number of locks acquired during processing.
+        </p>
+      </section>
+  
+      <section id="error1210">
+        <h2>Error 1210: Incorrect arguments to mysqld_stmt_execute</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1210 occurs when executing a prepared statement in MySQL with incorrect or mismatched arguments.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to prepared statement execution, and the code snippet will depend on the specific prepared
+          statement usage.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the number and data types of the arguments provided for the prepared statement match the placeholders
+          defined in the statement. Check for any mismatches and adjust the arguments accordingly.
+        </p>
+      </section>
+  
+      <section id="error1212">
+        <h2>Error 1212: The used SELECT statements have a different number of columns</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1212 occurs when using UNION or UNION ALL to combine the results of multiple SELECT statements with a different
+          number of columns in MySQL.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SELECT column1, column2 FROM table1
+            UNION
+            SELECT column1 FROM table2;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that all the SELECT statements in the UNION or UNION ALL operation have the same number of columns with matching
+          data types. If needed, use NULL or a default value in the SELECT statement to match the columns' count and data types.
+        </p>
+      </section>
+  
+      <section id="error1213">
+        <h2>Error 1213: Deadlock found when trying to get lock; try restarting transaction</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1213 occurs when two or more transactions are waiting for each other to release locks on resources, resulting in a
+          deadlock situation.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to transactional behavior and is not caused by specific code snippets.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Detecting and resolving deadlocks often involves reordering transactions or introducing timeouts to allow transactions
+          to be retried after a certain period. It's essential to design your application to handle deadlocks gracefully and retry
+          transactions when they encounter a deadlock.
+        </p>
+      </section>
+  
+      <section id="error1217">
+        <h2>Error 1217: Cannot delete or update a parent row: a foreign key constraint fails</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1217 occurs when trying to delete or update a row in a parent table that has a corresponding foreign key in a
+          child table, and the operation violates the foreign key constraint.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to foreign key constraints, and the code snippet will depend on the specific delete or update
+          operation.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Before deleting or updating a row in the parent table, ensure that there are no related rows in the child table that
+          reference the parent row. You may need to delete or update the related rows in the child table first or adjust the
+          foreign key constraints to allow cascading updates or deletes.
+        </p>
+      </section>
+  
+      <section id="error1227">
+        <h2>Error 1227: Access denied; you need (at least one of) the SUPER privilege(s) for this operation</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1227 occurs when a user attempts to execute an operation that requires the SUPER privilege, but the user does not
+          have the necessary privileges to perform the action.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to privilege management and does not have specific code snippets.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Grant the SUPER privilege to the user or the appropriate privileges that are required for the specific operation. You
+          may need to work with a database administrator to grant the necessary privileges.
+        </p>
+      </section>
+  
+      <section id="error1235">
+        <h2>Error 1235: This version of MySQL doesn't yet support 'multiple triggers with the same action time and event for one table'</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1235 occurs when trying to create multiple triggers with the same action time (e.g., BEFORE, AFTER) and event (e.g.,
+          INSERT, UPDATE) for a single table in MySQL.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE TRIGGER trigger1
+            BEFORE INSERT ON your_table
+            FOR EACH ROW
+            -- Trigger body...
+  
+            CREATE TRIGGER trigger2
+            BEFORE INSERT ON your_table
+            FOR EACH ROW
+            -- Trigger body...
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          MySQL versions before a certain release do not support multiple triggers with the same action time and event for one
+          table. To resolve this, either combine the logic of the multiple triggers into a single trigger or upgrade to a newer
+          version of MySQL that supports this feature.
+        </p>
+      </section>
+  
+      <section id="error1242">
+        <h2>Error 1242: Subquery returns more than 1 row</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1242 occurs when a subquery returns multiple rows while executing a statement that expects a single value.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SELECT column1 FROM your_table WHERE column2 = (SELECT column3 FROM other_table);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Modify your subquery to ensure it returns only a single row. You can use aggregate functions like MAX(), MIN(), or LIMIT
+          1 in the subquery to reduce the result to a single row or reevaluate your query logic to avoid multiple rows in the
+          subquery result.
+        </p>
+      </section>
+  
+      <section id="error1248">
+        <h2>Error 1248: Every derived table must have its own alias</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1248 occurs when using derived tables (subqueries in the FROM clause) without providing an alias for the derived
+          table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SELECT * FROM (SELECT column1 FROM your_table) WHERE column2 = 'value';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Provide an alias for the derived table to make the query syntactically correct. The alias can be any valid identifier,
+          and it is used as a reference to the derived table in the outer query.
+          <pre><code>
+            SELECT * FROM (SELECT column1 FROM your_table) AS alias_name WHERE column2 = 'value';
+          </code></pre>
+        </p>
+      </section>
+  
+      <section id="error1305">
+        <h2>Error 1305: FUNCTION your_function_name does not exist</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1305 occurs when trying to call a function in MySQL that does not exist in the current database.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SELECT your_function_name(column1) FROM your_table;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Check that the function name is spelled correctly and that the function exists in the database. If the function is not
+          defined in the current database, either create the function or ensure you are using the correct database context to
+          access the function.
+        </p>
+      </section>
+  
+      <section id="error1367">
+        <h2>Error 1367: Illegal non geometric 'column_name' value found during parsing</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1367 occurs when trying to insert or update a value into a geometric data type column, and the value provided is
+          invalid or cannot be parsed as a geometric value.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            INSERT INTO your_table (column1) VALUES ('invalid_geometry_value');
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that you are providing a valid geometric value for the column. Check for any typographical errors or incorrect
+          formatting in the geometry value. Use the appropriate functions to create valid geometric values or provide valid
+          well-formatted geometric data.
+        </p>
+      </section>
+  
+      <section id="error1552">
+        <h2>Error 1552: Cannot delete or update a parent row: a foreign key constraint fails</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1552 is similar to error 1217. It occurs when trying to delete or update a row in a parent table that has a
+          corresponding foreign key in a child table, and the operation violates the foreign key constraint.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to foreign key constraints, and the code snippet will depend on the specific delete or update
+          operation.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Just like in error 1217, before deleting or updating a row in the parent table, ensure that there are no related rows in
+          the child table that reference the parent row. You may need to delete or update the related rows in the child table first
+          or adjust the foreign key constraints to allow cascading updates or deletes.
+        </p>
+      </section>
+  
+      <section id="error1556">
+        <h2>Error 1556: You can't use locks with log tables.</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1556 occurs when trying to use locks on a log table in MySQL. Log tables are read-only and do not support locking
+          operations.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            LOCK TABLES log_table WRITE;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Log tables are designed for read-only access. Remove any locking statements from log tables or avoid using locks with
+          them. If you need to perform write operations, use regular non-log tables.
+        </p>
+      </section>
+  
+      <section id="error1601">
+        <h2>Error 1601: Out of global stack</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1601 occurs when the execution of a recursive function or stored procedure in MySQL exceeds the available global
+          stack space.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to recursive functions or stored procedures that utilize too much global stack space.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Check the implementation of the recursive function or stored procedure. Optimize the function to avoid deep levels of
+          recursion or excessive memory usage. If possible, redesign the function to use a loop instead of recursion to avoid
+          consuming the global stack space.
+        </p>
+      </section>
+  
+      <section id="error1615">
+        <h2>Error 1615: Prepared statement needs to be re-prepared</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1615 occurs when trying to execute a prepared statement that has become invalid and needs to be re-prepared due to
+          changes in the database schema or session variables.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            -- Create a prepared statement
+            PREPARE stmt FROM 'SELECT column1 FROM your_table WHERE column2 = ?';
+  
+            -- Execute the prepared statement with a placeholder value
+            EXECUTE stmt USING 'value';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          When encountering error 1615, you need to re-prepare the statement before executing it again. Re-prepare the statement
+          using the PREPARE statement, providing the same SQL query, and then execute the prepared statement again.
+          <pre><code>
+            -- Re-prepare the statement
+            DEALLOCATE PREPARE stmt;
+            PREPARE stmt FROM 'SELECT column1 FROM your_table WHERE column2 = ?';
+  
+            -- Execute the prepared statement with a placeholder value
+            EXECUTE stmt USING 'value';
+          </code></pre>
+        </p>
+      </section>
+  
+      <section id="error1698">
+        <h2>Error 1698: Access denied for user 'username'@'localhost'</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 1698 occurs when a user attempts to connect to the MySQL server but does not have the necessary privileges to access
+          the database.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to user authentication and access permissions, not specific code snippets.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Check the user's access privileges in the MySQL database. Ensure that the user has been granted the necessary permissions
+          to connect to the database and perform the required operations. If the user is not yet created, use the CREATE USER and
+          GRANT statements to set up the user with the appropriate privileges.
+        </p>
+      </section>
+  
+      <section id="error2018">
+        <h2>Error 2018: Can't find SAVEPOINT</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2018 occurs when trying to release or rollback to a SAVEPOINT that does not exist in the current session.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SAVEPOINT sp1;
+            -- Some operations...
+            ROLLBACK TO SAVEPOINT sp2;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Before rolling back to or releasing a SAVEPOINT, make sure it exists in the current session. If you encounter error 2018,
+          check the SAVEPOINT name for typographical errors or verify that the SAVEPOINT is created earlier in the same session.
+        </p>
+      </section>
+  
+      <section id="error2020">
+        <h2>Error 2020: Got packet bigger than 'max_allowed_packet' bytes</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2020 occurs when trying to send a packet to the MySQL server that exceeds the 'max_allowed_packet' size limit.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          N/A (This error is related to the size of the data being sent to the server and not specific code snippets.)
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, you can increase the 'max_allowed_packet' value in the MySQL configuration file (my.cnf or
+          my.ini) to accommodate larger packets. Alternatively, you can optimize your application to handle smaller data chunks or
+          split large data into smaller packets before sending them to the server.
+        </p>
+      </section>
+  
+      <section id="error2033">
+        <h2>Error 2033: SET @@sql_log_bin = {#value}; is deprecated and will be removed in a future release</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2033 occurs when trying to set the 'sql_log_bin' variable using 'SET @@sql_log_bin = {#value};'. This syntax is
+          deprecated and will be removed in a future MySQL release.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SET @@sql_log_bin = 1;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To avoid error 2033, use the 'SET sql_log_bin = {#value};' syntax instead. The '@@' syntax is being deprecated, and it's
+          recommended to use the 'SET' statement directly without the double '@@' prefix.
+          <pre><code>
+            SET sql_log_bin = 1;
+          </code></pre>
+        </p>
+      </section>
+  
+      <section id="error2058">
+        <h2>Error 2058: DROP DATABASE failed; error 2060</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2058 occurs when trying to drop a database in MySQL, but the operation fails due to an internal error (error 2060).
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            DROP DATABASE your_database;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          When encountering error 2058, check the MySQL error log to get more information about the underlying error (error 2060).
+          The specific solution will depend on the root cause of error 2060. It may involve fixing file permissions, checking for
+          disk space availability, or resolving any other issues that led to the internal error during the DROP DATABASE operation.
+        </p>
+      </section>
+  
+      <section id="error2061">
+        <h2>Error 2061: Authentication plugin 'caching_sha2_password' cannot be loaded</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 2061 occurs when trying to connect to MySQL using an authentication plugin that cannot be loaded by the server.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            mysql -u username -p
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          This error is usually caused by an outdated or incompatible authentication plugin used by the client application or MySQL
+          client library. To resolve this, update the client application or library to use a compatible authentication plugin like
+          'mysql_native_password'. Alternatively, you can update the MySQL server to use the 'caching_sha2_password' plugin, but
+          this may require some server-side configuration changes.
+        </p>
+      </section>
+      <section id="error4193">
+        <h2>Error 4193: Table 'your_table' already exists</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4193 occurs when trying to create a table with a name that is already in use by another table in the same database.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE TABLE your_table (
+              column1 INT,
+              column2 VARCHAR(255)
+            );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, either drop the existing table with the same name before creating a new one, or choose a different
+          table name for the new table.
+        </p>
+      </section>
+  
+      <section id="error4299">
+        <h2>Error 4299: BLOB/TEXT column 'column_name' can't have a default value</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4299 occurs when trying to set a default value for a BLOB or TEXT column in MySQL. BLOB and TEXT columns cannot have
+          default values.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE TABLE your_table (
+              column1 INT,
+              column2 TEXT DEFAULT 'default_value'
+            );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, remove the default value from the BLOB or TEXT column definition. BLOB and TEXT columns are
+          explicitly designed to store large amounts of data, and default values are not allowed for them.
+        </p>
+      </section>
+  
+      <section id="error4320">
+        <h2>Error 4320: Table 'your_table' doesn't exist</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4320 occurs when trying to reference or perform operations on a table that does not exist in the database.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SELECT * FROM your_table;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          Ensure that the table name is spelled correctly and that the table exists in the database. If the table does not exist,
+          create it using the CREATE TABLE statement before referencing it in other queries.
+        </p>
+      </section>
+  
+      <section id="error4570">
+        <h2>Error 4570: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 4570 occurs when trying to perform an operation that requires the PROCESS privilege, but the user does not have the
+          necessary permissions.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SHOW PROCESSLIST;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, grant the user the PROCESS privilege. You can do this using the GRANT statement as follows:
+          <pre><code>
+            GRANT PROCESS ON *.* TO 'your_user'@'your_host';
+          </code></pre>
+          Replace 'your_user' and 'your_host' with the appropriate username and host.
+        </p>
+      </section>
+  
+      <section id="error5029">
+        <h2>Error 5029: Can't create database 'your_database'; database exists</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 5029 occurs when trying to create a database that already exists in the MySQL server.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE DATABASE your_database;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, use a different database name for the CREATE DATABASE statement. If the database already exists and
+          you want to modify it, use the ALTER DATABASE statement instead.
+        </p>
+      </section>
+  
+      <section id="error6000">
+        <h2>Error 6000: Table storage engine 'your_storage_engine' does not support the create option</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 6000 occurs when trying to create a table with a storage engine that does not support the specified create options.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE TABLE your_table ENGINE = your_storage_engine;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, either choose a different storage engine that supports the specified create options or modify the
+          create options to be compatible with the selected storage engine.
+        </p>
+      </section>
+  
+      <section id="error6001">
+        <h2>Error 6001: Can't create table 'your_table' (errno: 168)</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 6001 occurs when trying to create a table, but the operation fails due to an internal error with error number 168.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE TABLE your_table (
+              column1 INT
+            );
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          When encountering error 6001 with errno 168, check the MySQL error log to get more information about the underlying error.
+          The specific solution will depend on the root cause of the internal error (errno 168). It may involve fixing file
+          permissions, checking for disk space availability, or resolving any other issues that led to the internal error during the
+          table creation operation.
+        </p>
+      </section>
+  
+      <section id="error6145">
+        <h2>Error 6145: You have an error in your SQL syntax</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 6145 occurs when there is a syntax error in the SQL query being executed.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            SELECT column1, column2 FROM your_table WHERE column3 = 'value';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, carefully review the SQL query and check for any syntax errors such as missing or misplaced
+          keywords, parentheses, or quotation marks. Ensure that the query is well-formed and follows the correct SQL syntax for
+          the database engine you are using.
+        </p>
+      </section>
+  
+      <section id="error6228">
+        <h2>Error 6228: Column count doesn't match value count at row 1</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 6228 occurs when trying to insert data into a table, but the number of columns specified in the INSERT statement does
+          not match the number of values provided.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            INSERT INTO your_table (column1, column2) VALUES ('value1', 'value2', 'value3');
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, ensure that the number of columns specified in the INSERT statement matches the number of values
+          provided. If the table has three columns, the VALUES clause should contain three values, one for each column in the same
+          order as they appear in the table.
+        </p>
+      </section>
+  
+      <section id="error6450">
+        <h2>Error 6450: Incorrect index name 'your_index' on table 'your_table'</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 6450 occurs when trying to create or use an index with an incorrect or non-existent index name for the specified
+          table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE INDEX your_index ON your_table (column1);
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, ensure that the index name is spelled correctly and that the index does not already exist for the
+          specified table. If the index name is incorrect, correct it in the CREATE INDEX statement. If the index already exists,
+          consider using a different index name or dropping the existing index before creating a new one with the desired name.
+        </p>
+      </section>
+  
+      <section id="error7014">
+        <h2>Error 7014: Index column size too large</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 7014 occurs when trying to create an index with a column size that exceeds the maximum allowed index size in the
+          storage engine.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            CREATE INDEX your_index ON your_table (column1(500));
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, reduce the size of the indexed column to fit within the maximum index size limit for the storage
+          engine. For example, if the column size is currently set to (500), reduce it to a value that meets the index size
+          requirements.
+        </p>
+      </section>
+  
+      <section id="error7159">
+        <h2>Error 7159: Table storage engine 'your_storage_engine' does not support the given lock type</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 7159 occurs when trying to use a lock type that is not supported by the specified storage engine for a table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            LOCK TABLES your_table WRITE;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, use a lock type that is supported by the storage engine for the table. Check the MySQL
+          documentation for the supported lock types for different storage engines and choose an appropriate lock type for your
+          scenario.
+        </p>
+      </section>
+  
+      <section id="error7310">
+        <h2>Error 7310: This command is not supported in the prepared statement protocol yet</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 7310 occurs when trying to use a command in a prepared statement that is not yet supported by the prepared statement
+          protocol in MySQL.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            PREPARE stmt FROM 'SELECT * FROM your_table';
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, avoid using unsupported commands in prepared statements. Check the MySQL documentation for the list
+          of commands that are supported in prepared statements, and make sure your statement adheres to the supported commands
+          list.
+        </p>
+      </section>
+  
+      <section id="error7320">
+        <h2>Error 7320: Incorrect usage of PREPARE and EXECUTE</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 7320 occurs when there is an incorrect usage of the PREPARE and EXECUTE statements in MySQL.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            PREPARE stmt FROM 'SELECT column1 FROM your_table WHERE column2 = ?';
+            EXECUTE stmt;
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, use the EXECUTE statement with a USING clause to specify the value for the placeholder in the
+          prepared statement.
+          <pre><code>
+            PREPARE stmt FROM 'SELECT column1 FROM your_table WHERE column2 = ?';
+            EXECUTE stmt USING 'value';
+          </code></pre>
+        </p>
+      </section>
+  
+      <section id="error8062">
+        <h2>Error 8062: Duplicate entry 'value' for key 'PRIMARY'</h2>
+        <p>
+          <strong>Description:</strong>
+          Error 8062 occurs when trying to insert or update a record with a value that already exists in the primary key column of the
+          table.
+        </p>
+        <p>
+          <strong>Code Snippet:</strong>
+          <pre><code>
+            INSERT INTO your_table (id, column1) VALUES (1, 'value');
+          </code></pre>
+        </p>
+        <p>
+          <strong>Solution:</strong>
+          To resolve this error, ensure that the primary key column does not contain duplicate values. If the primary key is intended
+          to be unique, use the INSERT IGNORE statement to prevent duplicate inserts, or use the REPLACE statement to replace the
+          existing record with the new data.
+        </p>
+      </section>
   </main>
 
   <script src="script.js"></script>
